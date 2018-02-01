@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+// 依赖插件脚本
+apply from: 'tinker-support.gradle'
+
+android {
+    signingConfigs {
+        release {
+            keyAlias 'text'
+            keyPassword '123456'
+            storeFile file('E:/text.jks')
+            storePassword '123456'
+        }
+    }
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+        applicationId "com.example.administrator.bugly"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 7
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.1'
+    // 多dex配置
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    // 升级SDK
+}
