@@ -1,6 +1,6 @@
 # bugly
 #第一步：添加插件依赖
-'''
+```
 buildscript {
     repositories {
         jcenter()
@@ -10,11 +10,11 @@ buildscript {
         classpath "com.tencent.bugly:tinker-support:1.0.4"
     }
 }
-'''
+```
 
 #第二步：集成SDK
 ## 在app module的build.gradle文件中添加配置
-'''
+```
 dependencies {
     compile "com.android.support:multidex:1.0.1" // 多dex配置
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.1
@@ -22,10 +22,10 @@ dependencies {
 
 //依赖插件脚本
 apply from: 'tinker-support.gradle'
-'''
+```
 
 #第三步：在build.gradle同级目录下创建一个tingker-support.gradle文件。
-'''
+```
 apply plugin: 'com.tencent.bugly.tinker-support'
 
 def bakPath = file("${buildDir}/bakApk/")
@@ -109,9 +109,9 @@ tinkerPatch {
         //applyResourceMapping = "${bakPath}/${appName}/app-release-R.txt" // 可选，设置R.txt文件，通过旧apk文件保持ResId的分配
     }
 }
-'''
+```
 #第四步：打基础包要注意
-'''
+```
 /**
  * 此处填写每次构建生成的基准包目录
  */
@@ -119,12 +119,12 @@ def baseApkDir = "tinkerfix-0216-18-42-47"
 
  // 是否开启反射Application模式
     enableProxyApplication = true
-'''
+```
 #第五步：混淆配置
 ##为了避免混淆SDK，在Prouard混淆文件中增加以下配置：
-'''
+```
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
 如果你使用了Support-v4包，你需要配置以下规则：
 -keep class android.support.**{*;}
-'''
+```
